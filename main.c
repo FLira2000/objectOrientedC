@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct {
+typedef struct p {
     char* FirstName;
     char* LastName;
-    char* (*ConcatBothNames)(char *, char *);
+    char* (*ConcatBothNames)(char*, char*);
 }Person;
 
 Person* createPerson(){
@@ -13,7 +13,7 @@ Person* createPerson(){
     p->FirstName = NULL;
     p->LastName = NULL;
 
-    char* concatBothNames(char* First, char* Last){
+    char* concatBothNames(char *First, char *Last){
         char* temp;
         strcpy(temp, "");
         strcat(temp, First);
@@ -22,7 +22,7 @@ Person* createPerson(){
         return temp;
     }
     
-    p->ConcatBothNames = concatBothNames;
+    p->ConcatBothNames = &concatBothNames;
     return p;
 }
 

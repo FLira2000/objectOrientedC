@@ -2,15 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-static char* concatBothNames(char* First, char* Last){
-    char* temp;
-    strcpy(temp, "");
-    strcat(temp, First);
-    strcat(temp, " ");
-    strcat(temp, Last);
-    return temp;
-}
-
 typedef struct {
     char* FirstName;
     char* LastName;
@@ -19,7 +10,19 @@ typedef struct {
 
 Person* createPerson(){
     Person *p = malloc(sizeof(Person));
-    p->ConcatBothNames = &concatBothNames;
+    p->FirstName = NULL;
+    p->LastName = NULL;
+
+    char* concatBothNames(char* First, char* Last){
+        char* temp;
+        strcpy(temp, "");
+        strcat(temp, First);
+        strcat(temp, " ");
+        strcat(temp, Last);
+        return temp;
+    }
+    
+    p->ConcatBothNames = concatBothNames;
     return p;
 }
 

@@ -3,22 +3,24 @@
 #include <string.h>
 
 typedef struct p {
+    void* self;
     char* FirstName;
     char* LastName;
-    char* (*ConcatBothNames)(char*, char*);
+    char* (*ConcatBothNames)(struct p*);
 }Person;
 
 Person* createPerson(){
     Person *p = malloc(sizeof(Person));
     p->FirstName = NULL;
     p->LastName = NULL;
+    p->self = p;
 
-    char* concatBothNames(char *First, char *Last){
+    char* concatBothNames(Person *p){
         char* temp;
         strcpy(temp, "");
-        strcat(temp, First);
+        strcat(temp, p->FirstName);
         strcat(temp, " ");
-        strcat(temp, Last);
+        strcat(temp, p->LastName);
         return temp;
     }
     
@@ -31,6 +33,6 @@ int main(){
     p->FirstName = "Fabio";
     p->LastName = "Lira";
 
-    printf("Bem vindo, %s!", p->ConcatBothNames(p->FirstName, p->LastName));
+    printf("Bem vindo, %s!", p->ConcatBothNames(p->self));
     return 0;
 }

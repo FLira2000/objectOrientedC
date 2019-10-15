@@ -4,35 +4,35 @@
 
 typedef struct p {
     void* self;
-    char* FirstName;
-    char* LastName;
-    char* (*ConcatBothNames)(struct p*);
+    char* firstName;
+    char* lastName;
+    char* (*fullName)(struct p*);
 }Person;
+
+char* concatBothNames(Person *p){
+    char* temp;
+    strcpy(temp, "");
+    strcat(temp, p->firstName);
+    strcat(temp, " ");
+    strcat(temp, p->lastName);
+    return temp;
+}
 
 Person* createPerson(){
     Person *p = malloc(sizeof(Person));
-    p->FirstName = NULL;
-    p->LastName = NULL;
+    p->firstName = NULL;
+    p->lastName= NULL;
     p->self = p;
-
-    char* concatBothNames(Person *p){
-        char* temp;
-        strcpy(temp, "");
-        strcat(temp, p->FirstName);
-        strcat(temp, " ");
-        strcat(temp, p->LastName);
-        return temp;
-    }
     
-    p->ConcatBothNames = &concatBothNames;
+    p->fullName = &concatBothNames;
     return p;
 }
 
 int main(){
     Person *p = createPerson();
-    p->FirstName = "Fabio";
-    p->LastName = "Lira";
+    p->firstName = "Fabio";
+    p->lastName = "Lira";
 
-    printf("Bem vindo, %s!", p->ConcatBothNames(p->self));
+    printf("Bem vindo, %s!", p->fullName(p->self));
     return 0;
 }
